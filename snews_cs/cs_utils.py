@@ -4,6 +4,7 @@ Example initial docstring
 from dotenv import load_dotenv
 import os
 
+
 def set_env(env_path=None):
     """ Set environment parameters
 
@@ -17,6 +18,7 @@ def set_env(env_path=None):
     default_env_path = os.path.dirname(__file__) + '/auxiliary/test-config.env'
     env = env_path or default_env_path
     load_dotenv(env)
+
 
 def make_beat_directory(directory):
     if not os.path.exists(directory):

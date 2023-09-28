@@ -22,6 +22,7 @@ beats_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../beats")
 mirror_csv = os.path.abspath(os.path.join(beats_path, f"cached_heartbeats_mirror.csv"))
 master_csv = os.path.abspath(os.path.join(beats_path, f"complete_heartbeat_log.csv"))
 
+
 def get_data_strings(df_input):
     """ Convert datetime objects to strings
 
@@ -208,7 +209,6 @@ class HeartBeat:
         """
         print(f"\nCurrent cache \n{'=' * 133}\n{self.cache_df.to_markdown()}\n{'=' * 133}\n")
 
-
     def sanity_checks(self, message):
         """ check if the message will crash the server
             Check  the following
@@ -234,7 +234,6 @@ class HeartBeat:
         else:
             log.error(f"\t> {message} is received at snews_hb.py but not valid.")
             return False
-
 
     def electrocardiogram(self, message):
         try:

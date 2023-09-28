@@ -15,6 +15,7 @@ contact_list_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'aux
 with open(contact_list_file) as file:
     contact_list = json.load(file)
 
+
 # SNEWS Alert
 def send_email(alert_content):
     """ Send the SNEWS alert via e-mail
@@ -45,6 +46,7 @@ def _mail_sender(mails):
         log.error(f"\t> Mail could not be sent.\n")
         return False
 
+
 # FEEDBACK EMAIL
 def send_feedback_mail(detector, attachment=None, message_content=None, given_contact=None):
     """ Send feedback email to authorized, requested users
@@ -72,12 +74,13 @@ def send_feedback_mail(detector, attachment=None, message_content=None, given_co
     else:
         log.info(f"\t\t> Feedback mail is requested for {detector}. However, there are no contacts added.")
 
-# Send WARNING message
 
+# Send WARNING message
 base_warning = "echo {message_content} | " \
                "s-nail " \
                "-s 'SNEWS Server Heartbeat for {detector} is skipped!' " \
                "{contact}"
+
 
 def send_warning_mail(detector, message_content=None):
     """ Send warning mail when a heartbeat is skipped

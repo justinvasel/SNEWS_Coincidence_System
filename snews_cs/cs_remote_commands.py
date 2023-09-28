@@ -33,7 +33,6 @@ with open(contact_list_file) as file:
     contact_list = json.load(file)
 
 
-
 # should I allow people to change their passwords? I can use simple encryption: from cryptography.fernet import Fernet
 class Commands:
     """ Class for remote commands"""
@@ -173,6 +172,7 @@ class Commands:
         except Exception as e:
             log.info(f"\t> Something went wrong for {detector}, couldn't send mail, see the exception;\n{e}")
 
+
 class CommandHandler:
     """ class to handle the manual command issued by the admins
             These commands can be
@@ -187,8 +187,6 @@ class CommandHandler:
         """
 
     def __init__(self, message):
-
-
         self.input_message = message
         self.input_json = json.dumps(message, sort_keys=True, indent=4)
         self.command_name = None

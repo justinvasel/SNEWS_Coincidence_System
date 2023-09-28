@@ -19,6 +19,7 @@ alert_topic = os.getenv("ALERT_TOPIC")
 slack_channel_id = os.getenv("slack_channel_id")
 alert_schema = CoincidenceTierAlert()
 
+
 def get_image(is_test, alert_data, topic):
     # parse input
     tag = '<!here>\n' if not is_test else '\n'
