@@ -165,7 +165,7 @@ class Commands:
             f"> [DEBUG] These mails are passed {'; '.join(given_mail)} for detector: {detector}"
         )
         for email in given_mail:
-            if not email in contact_list[detector]["emails"]:
+            if email not in contact_list[detector]["emails"]:
                 log.error(f"\t> The given email: {email} is not registered for {detector}!")
             else:
                 none_valid = False

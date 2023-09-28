@@ -205,7 +205,7 @@ class HeartBeat:
             try:
                 dates.append(datetime.strptime(d_str, "%y-%m-%d"))
                 files.append(logfile)
-            except:
+            except Exception:
                 continue
 
         time_differences = np.array([(date - today).days for date in dates])
