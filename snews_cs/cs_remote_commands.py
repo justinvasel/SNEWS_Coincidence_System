@@ -110,7 +110,7 @@ class Commands:
     def change_broker(self, message, CoincDeciderInstance):
         try:
             new_broker_name = message["_id"][2]
-        except Exception as e:
+        except Exception:
             new_broker_name = "NotImplemented"
 
         authorized = self._check_rights(message)

@@ -102,7 +102,7 @@ def send_warning_mail(detector, message_content=None):
                 message_content=message_content, detector=detector, contact=contact
             )
             log.info(f"\t\t> Trying to send warning to {contact} for {detector}\n")
-            out = _mail_sender([mail_regular])
+            _mail_sender([mail_regular])
     else:
         log.info(
             f"\t\t> Warning is triggered for {detector}. However, there are no contacts added."
