@@ -22,5 +22,3 @@ def cache_false_alarm_rate(cache_sub_list, hb_cache):
     mu = 1 * num_detectors_online   # expected number of false coincidence for a week
     prob_false_alarm_rate = poisson.pmf(k=num_coinc_detectors, mu=mu)
     return np.round(prob_false_alarm_rate, decimals=5)
-
-

@@ -23,7 +23,3 @@ def set_env(env_path=None):
 def make_beat_directory(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
-
-
-
-
