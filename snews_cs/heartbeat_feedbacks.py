@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from time import sleep
-from .core.logging import getLogger
-from .cs_email import send_warning_mail, send_feedback_mail
-from .snews_hb import beats_path, mirror_csv
+from snews_cs.core.logging import getLogger
+from snews_cs.cs_email import send_warning_mail, send_feedback_mail
+from snews_cs.snews_hb import beats_path, mirror_csv
 
 log = getLogger(__name__)
 
@@ -189,7 +189,7 @@ def check_frequencies_and_send_mail(detector, given_contact=None):
 
 def plot_beats(df, detector, figname):
     """Requires QT libraries: sudo apt-get install qt5-default"""
-        latency = pd.to_timedelta(df["Latency"].values).total_seconds()
+    latency = pd.to_timedelta(df["Latency"].values).total_seconds()
     received_times = df["Received Times"]
     unique_days = list(
         set(

@@ -1,5 +1,5 @@
 import pymongo
-from . import cs_utils
+from snews_cs import cs_utils
 import os
 
 

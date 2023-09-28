@@ -1,19 +1,19 @@
-from . import cs_utils
-from .snews_db import Storage
+from snews_cs import cs_utils
+from snews_cs.snews_db import Storage
 import click
 import os
 from datetime import datetime
-from .alert_pub import AlertPublisher
+from snews_cs.alert_pub import AlertPublisher
 import numpy as np
 import pandas as pd
 from hop import Stream
-from . import snews_bot
-from .cs_alert_schema import CoincidenceTierAlert
-from .cs_remote_commands import CommandHandler
-from .core.logging import getLogger
-from .cs_email import send_email
-from .snews_hb import HeartBeat
-from .cs_stats import cache_false_alarm_rate
+from snews_cs import snews_bot
+from snews_cs.cs_alert_schema import CoincidenceTierAlert
+from snews_cs.cs_remote_commands import CommandHandler
+from snews_cs.core.logging import getLogger
+from snews_cs.cs_email import send_email
+from snews_cs.snews_hb import HeartBeat
+from snews_cs.cs_stats import cache_false_alarm_rate
 import sys
 import random
 import time

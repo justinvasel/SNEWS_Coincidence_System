@@ -3,8 +3,8 @@
 import json
 import os
 from datetime import datetime
-from .core.logging import getLogger
-from .snews_hb import beats_path
+from snews_cs.core.logging import getLogger
+from snews_cs.snews_hb import beats_path
 
 log = getLogger(__name__)
 

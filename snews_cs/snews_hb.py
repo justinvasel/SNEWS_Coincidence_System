@@ -8,8 +8,8 @@ import os
 import pandas as pd
 from datetime import datetime
 import numpy as np
-from .cs_utils import set_env, make_beat_directory
-from .core.logging import getLogger
+from snews_cs.cs_utils import set_env, make_beat_directory
+from snews_cs.core.logging import getLogger
 
 log = getLogger(__name__)
 

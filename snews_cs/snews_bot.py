@@ -6,8 +6,8 @@
 
 from slack_sdk import WebClient
 import os
-from . import cs_utils
-from .cs_alert_schema import CoincidenceTierAlert
+from snews_cs import cs_utils
+from snews_cs.cs_alert_schema import CoincidenceTierAlert
 import warnings
 import pandas as pd
 

@@ -10,10 +10,10 @@
 # https://click.palletsprojects.com/en/8.0.x/utils/
 import click
 import os
-from . import __version__
-from . import cs_utils
-from . import snews_coinc as snews_coinc
-from .heartbeat_feedbacks import FeedBack
+from snews_cs import __version__
+from snews_cs import cs_utils
+from snews_cs import snews_coinc
+from snews_cs.heartbeat_feedbacks import FeedBack
 from socket import gethostname
 
 

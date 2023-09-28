@@ -10,8 +10,8 @@ Sebastian Torres-Lara
 import click
 import os
 from hop import Stream
-from . import cs_utils
-from .snews_db import Storage
+from snews_cs import cs_utils
+from snews_cs.snews_db import Storage
 
 
 class AlertPublisher:

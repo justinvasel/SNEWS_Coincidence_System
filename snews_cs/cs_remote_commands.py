@@ -2,8 +2,8 @@ import os
 import json
 import click
 from snews_pt.snews_format_checker import SnewsFormat
-from .heartbeat_feedbacks import check_frequencies_and_send_mail
-from .core.logging import getLogger
+from snews_cs.heartbeat_feedbacks import check_frequencies_and_send_mail
+from snews_cs.core.logging import getLogger
 from hop.models import JSONBlob
 
 log = getLogger(__name__)

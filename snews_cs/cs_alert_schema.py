@@ -1,4 +1,4 @@
-from .cs_utils import set_env
+from snews_cs.cs_utils import set_env
 from datetime import datetime
 
 
