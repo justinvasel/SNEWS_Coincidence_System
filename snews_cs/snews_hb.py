@@ -36,7 +36,7 @@ def get_data_strings(df_input):
     return df
 
 
-## TODO: make a list of internal heartbeats, and send us = SERVER heartbeats.
+# TODO: make a list of internal heartbeats, and send us = SERVER heartbeats.
 # How many times a day can server log these heartbeats, (what is the livetime of server)
 
 class HeartBeat:
@@ -61,7 +61,7 @@ class HeartBeat:
 
         self.column_names = ["Received Times", "Detector", "Stamped Times", "Latency", "Time After Last", "Status"]
         self.cache_df = pd.DataFrame(columns=self.column_names)
-        self._last_row = pd.DataFrame(columns=self.column_names) #pd.Series(index=self.column_names)
+        self._last_row = pd.DataFrame(columns=self.column_names)  # pd.Series(index=self.column_names)
 
     def make_entry(self, message):
         """ Make an entry in the cache df using new message
@@ -80,7 +80,7 @@ class HeartBeat:
         if len(detector_df):
             msg["Time After Last"] = (msg["Received Times"] - detector_df["Received Times"].max()).total_seconds()
         else:
-            msg["Time After Last"] = 0 #timedelta(0)
+            msg["Time After Last"] = 0  # timedelta(0)
 
         msg["Status"] = message["detector_status"]
         self._last_row = pd.DataFrame([msg])
@@ -106,8 +106,8 @@ class HeartBeat:
         # self.store_beats()
         curr_time = datetime.utcnow()
         existing_times = self.cache_df["Received Times"]
-        del_t = (curr_time - existing_times).dt.total_seconds() / 60 / 60 # in hours
-        locs = np.where(del_t < self.stash_time)[0] # keep only times within stash time e.g. 24 hours
+        del_t = (curr_time - existing_times).dt.total_seconds() / 60 / 60  # in hours
+        locs = np.where(del_t < self.stash_time)[0]  # keep only times within stash time e.g. 24 hours
         self.cache_df = self.cache_df.reset_index(drop=True).loc[locs]
         self.cache_df.sort_values(by=['Received Times'], inplace=True)
 
@@ -223,7 +223,7 @@ class HeartBeat:
         if issue == "no issue":
             if not isinstance(message['Received Times'], datetime):
                 issue = f" {message['Received Times']} is not a datetime object"
-            if not message['detector_status'].lower() in ['on','    off']:
+            if not message['detector_status'].lower() in ['on', 'off']:
                 issue = f" {message['detector_status']} is neither ON nor OFF"
             if not message['detector_name'] in snews_detectors:
                 issue = f" {message['detector_name']} is not a valid detector"

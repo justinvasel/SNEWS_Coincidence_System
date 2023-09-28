@@ -20,7 +20,7 @@ slack_channel_id = os.getenv("slack_channel_id")
 alert_schema = CoincidenceTierAlert()
 
 def get_image(is_test, alert_data, topic):
-    ## parse input
+    # parse input
     tag = '<!here>\n' if not is_test else '\n'
     test = "TEST" if is_test else ""
     topic_str = f"\n> Broker: {topic.center(50,'-')}"
@@ -41,8 +41,8 @@ def get_image(is_test, alert_data, topic):
     retractlink = "https://www.shutterstock.com/image-vector/ooops-word-bubble-pop-art-600w-408777070.jpg"
     updatelink = "https://www.shutterstock.com/image-vector/vector-illustration-modern-label-new-600w-1520423249.jpg"
     # updatelink = "https://raw.githubusercontent.com/SNEWS2/SNEWS_Coincidence_System/main/snews_cs/auxiliary/update_image.png"
-    #"https://www.ris.world/wp-content/uploads/2018/09/update.jpg"
-    sendlink = giflink if alert_type=="NEW_MESSAGE" else (updatelink if alert_type=="UPDATE" else retractlink)
+    # "https://www.ris.world/wp-content/uploads/2018/09/update.jpg"
+    sendlink = giflink if alert_type == "NEW_MESSAGE" else (updatelink if alert_type == "UPDATE" else retractlink)
 
     im = [{
             "type": "section",
@@ -88,7 +88,7 @@ def send_table(alert_data, alert, is_test, topic):
     df = pd.DataFrame.from_dict(alert_data)
     df_simplified = df[["detector_names", "neutrino_times", "p_vals"]]
     df_simplified.sort_values("neutrino_times", inplace=True)
-    table = df_simplified.to_markdown() # tablefmt="grid"
+    table = df_simplified.to_markdown()  # tablefmt="grid"
     image_block = get_image(is_test, alert, topic)
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore")

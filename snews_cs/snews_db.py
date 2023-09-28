@@ -9,7 +9,7 @@ class Storage:
 
     Parameters
     ----------
-    env : `str`, optional 
+    env : `str`, optional
         Path to env file, defaults to './auxiliary/test-config.env'
     drop_db : `bool`, optional
         drops all items in the DB every time Storage is initialized, defaults to False
@@ -70,8 +70,8 @@ class Storage:
 
         self.coll_list = {
             'CoincidenceTier': self.coincidence_tier_archive,
-            'SigTier':self.sig_tier_archive,
-            'TimeTier':self.time_tier_archive,
+            'SigTier': self.sig_tier_archive,
+            'TimeTier': self.time_tier_archive,
             'Retraction': self.false_warnings,
             'CoincidenceTierAlert': self.coincidence_tier_alerts,
             'SigTierAlert': self.sig_tier_alerts,
@@ -80,7 +80,7 @@ class Storage:
 
     def insert_mgs(self, mgs):
         """ This method inserts a SNEWS message to its corresponding collection
-        
+
         Parameters
         ----------
         mgs : `dict`
@@ -120,7 +120,7 @@ class Storage:
         -------
         result : `list`
             A list containing all items inside 'Coincidence Tier Cache'
-                    
+
         """
         return self.coincidence_tier_archive.find().sort('received_time', sort_order)
 
@@ -136,7 +136,7 @@ class Storage:
         -------
         result : `list`
             A list containing all items inside 'Coincidence Tier Cahce'
-            
+
         """
         return self.false_warnings.find().sort('received_time', sort_order)
 
@@ -163,7 +163,7 @@ class Storage:
 
         Parameters
         ----------
-        coll : `str` 
+        coll : `str`
             name of collection
 
         """

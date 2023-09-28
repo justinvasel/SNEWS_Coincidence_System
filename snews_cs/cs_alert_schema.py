@@ -22,13 +22,13 @@ class CoincidenceTierAlert:
             time format should always be same for all detectors.
             num_detectors: `int`
                 Number of detectors in the alert. If more than 2,
-                it is an update to an earlier alert, and will be 
+                it is an update to an earlier alert, and will be
                 appended with -UPDATE_ string
 
         Returns
             :`str`
                 The formatted id as a string
-            
+
         """
         date_time = datetime.utcnow().isoformat()
         if num_detectors == 2:
@@ -39,21 +39,21 @@ class CoincidenceTierAlert:
     def get_cs_alert_schema(self, data):
         """ Create a message schema for alert.
             Internally called in hop_pub
-        
+
             Parameters
             ----------
             data : `named tuple`
                 cs_utils data tuple with predefined field.
-            
+
             Returns
             -------
                 :`dict`
-                    message with the correct scheme 
+                    message with the correct scheme
 
         """
         id = self.id_format(len(data['detector_names']))
         return {"_id": id,
-                "alert_type":data['alert_type'],
+                "alert_type": data['alert_type'],
                 "server_tag": data['server_tag'],
                 "False Alarm Prob": f"{data['false_alarm_prob']*100:.2f}%",
                 "detector_names": data['detector_names'],

@@ -44,8 +44,8 @@ class Commands:
                                         "broker-change": self.change_broker,
                                         "Heartbeat": self.heartbeat_handle,
                                         "display-heartbeats": self.display_heartbeats,
-                                        "Retraction":self.retract_message,
-                                        "Get-Feedback":self.send_feedback}
+                                        "Retraction": self.retract_message,
+                                        "Get-Feedback": self.send_feedback}
         self.passw = os.getenv('snews_cs_admin_pass', 'False')
 
     def _check_rights(self, message):
@@ -154,7 +154,7 @@ class Commands:
         detector = message['detector_name']
         none_valid = True
         # avoid empty lines, and allow multiple emails
-        given_mail =  [mail.strip() for mail in given_mail.split(";") if len(mail.strip())]
+        given_mail = [mail.strip() for mail in given_mail.split(";") if len(mail.strip())]
         log.debug(f"> [DEBUG] These mails are passed {'; '.join(given_mail)} for detector: {detector}")
         for email in given_mail:
             if not email in contact_list[detector]["emails"]:

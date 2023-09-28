@@ -32,6 +32,7 @@ def main(ctx, env):
     cs_utils.set_env(env_path)
     ctx.obj['env'] = env
 
+
 @main.command()
 @click.option('--local/--no-local', default=True, show_default='True', help='Whether to use local database server or take from the env file')
 @click.option('--firedrill/--no-firedrill', default=False, show_default='False', help='Whether to use firedrill brokers or default ones')
@@ -56,6 +57,7 @@ def run_coincidence(local, firedrill, dropdb, email, slackbot):
         print(e)
     finally:
         click.secho(f'\n{"="*30}DONE{"="*30}', fg='white', bg='green')
+
 
 @main.command()
 @click.option('--verbose', '-v', default=False, show_default='False', help='Verbose print')

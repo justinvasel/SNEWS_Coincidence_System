@@ -544,7 +544,7 @@ class CoincidenceDistributor:
                             click.secho(f'{"-" * 57}', fg='bright_blue')
                             self.coinc_data.add_to_cache(message=snews_message)
                             if self.show_table:
-                                self.display_table()  ## don't display on the server
+                                self.display_table()  # don't display on the server
                             self.alert_decider()
                             self.storage.insert_mgs(snews_message)
                             sys.stdout.flush()

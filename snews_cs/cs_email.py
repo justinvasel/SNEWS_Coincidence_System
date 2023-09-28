@@ -15,7 +15,7 @@ contact_list_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'aux
 with open(contact_list_file) as file:
     contact_list = json.load(file)
 
-### SNEWS Alert
+# SNEWS Alert
 def send_email(alert_content):
     """ Send the SNEWS alert via e-mail
     """
@@ -25,7 +25,7 @@ def send_email(alert_content):
         space = 40 - len(k)
         pretty_alert += f'{k} :{r" "*space}{v}\n'
     emails = 'snews2-test-ahabig@d.umn.edu'
-    os.system( f'echo "{pretty_alert}"| mail -s "SNEWS COINCIDENCE {datetime.utcnow().isoformat()}" {emails}')
+    os.system(f'echo "{pretty_alert}"| mail -s "SNEWS COINCIDENCE {datetime.utcnow().isoformat()}" {emails}')
     log.info(f"\t\t> SNEWS Alert mail was sent at {datetime.utcnow().isoformat()} to {emails}")
 
 
@@ -45,7 +45,7 @@ def _mail_sender(mails):
         log.error(f"\t> Mail could not be sent.\n")
         return False
 
-### FEEDBACK EMAIL
+# FEEDBACK EMAIL
 def send_feedback_mail(detector, attachment=None, message_content=None, given_contact=None):
     """ Send feedback email to authorized, requested users
     """
@@ -72,7 +72,7 @@ def send_feedback_mail(detector, attachment=None, message_content=None, given_co
     else:
         log.info(f"\t\t> Feedback mail is requested for {detector}. However, there are no contacts added.")
 
-### Send WARNING message
+# Send WARNING message
 
 base_warning = "echo {message_content} | " \
                "s-nail " \
@@ -95,5 +95,5 @@ def send_warning_mail(detector, message_content=None):
     else:
         log.info(f"\t\t> Warning is triggered for {detector}. However, there are no contacts added.")
 
-#### sudo apt-get install sendmail
+# sudo apt-get install sendmail
 
