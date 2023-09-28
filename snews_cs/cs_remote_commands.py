@@ -25,31 +25,36 @@ known_commands = [
     "Heartbeat",
     "display-heartbeats",
     "Retraction",
-    "Get-Feedback"
+    "Get-Feedback",
 ]
 
-contact_list_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'auxiliary/contact_list.json'))
+contact_list_file = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "auxiliary/contact_list.json")
+)
 with open(contact_list_file) as file:
     contact_list = json.load(file)
 
 
-# should I allow people to change their passwords? I can use simple encryption: from cryptography.fernet import Fernet
+# should I allow people to change their passwords?
+# I can use simple encryption: from cryptography.fernet import Fernet
 class Commands:
-    """ Class for remote commands"""
+    """Class for remote commands"""
 
     def __init__(self):
-        self.known_command_functions = {"test-connection": self.test_connection,
-                                        "hard-reset": self.hard_reset,
-                                        "broker-change": self.change_broker,
-                                        "Heartbeat": self.heartbeat_handle,
-                                        "display-heartbeats": self.display_heartbeats,
-                                        "Retraction": self.retract_message,
-                                        "Get-Feedback": self.send_feedback}
-        self.passw = os.getenv('snews_cs_admin_pass', 'False')
+        self.known_command_functions = {
+            "test-connection": self.test_connection,
+            "hard-reset": self.hard_reset,
+            "broker-change": self.change_broker,
+            "Heartbeat": self.heartbeat_handle,
+            "display-heartbeats": self.display_heartbeats,
+            "Retraction": self.retract_message,
+            "Get-Feedback": self.send_feedback,
+        }
+        self.passw = os.getenv("snews_cs_admin_pass", "False")
 
     def _check_rights(self, message):
         try:
-            if message['pass'] == self.passw:
+            if message["pass"] == self.passw:
                 return True
             else:
                 log.error(f"\t> Authorization check failed")
@@ -59,10 +64,10 @@ class Commands:
             return False
 
     def execute(self, command_name, message, CoincDeciderInstance):
-        """ If Command Handler finds a Remote Command from known_commands
-            It returns the name, message and the CoincidenceInstance
-            Here we perform some remote commands on that CoincidenceInstance
-            such as resetting the cache.
+        """If Command Handler finds a Remote Command from known_commands
+        It returns the name, message and the CoincidenceInstance
+        Here we perform some remote commands on that CoincidenceInstance
+        such as resetting the cache.
         """
         # get the function that executes given command
         command = self.known_command_functions[command_name]
@@ -72,27 +77,29 @@ class Commands:
         # for retraction message we need to let it enter the cache. So updated alerts can be checked
 
     def test_connection(self, message, CoincDeciderInstance):
-        """ When received a test_connection key in observation topic
-            reinstert the message with updated status to connection topic
-            this way user can test if their message
-            goes and comes back from the server, by looking into the connection topic
+        """When received a test_connection key in observation topic
+        reinstert the message with updated status to connection topic
+        this way user can test if their message
+        goes and comes back from the server, by looking into the connection topic
         """
         log.debug("\t> Executing Test Connection Command.")
         default_connection_topic = "kafka://kafka.scimma.org/snews.connection-testing"
         connection_broker = os.getenv("CONNECTION_TEST_TOPIC", default_connection_topic)
 
         from hop import Stream
+
         stream = Stream(until_eos=True)
         msg = message.copy()
         msg["status"] = "received"
         with stream.open(connection_broker, "w") as s:
             # insert back with a "received" status
             s.write(JSONBlob(msg))
-            log.info(f"\t> Connection Tested. 'Received' message is reinserted to connection stream.")
+            log.info(
+                f"\t> Connection Tested. 'Received' message is reinserted to connection stream."
+            )
 
     def hard_reset(self, message, CoincDeciderInstance):
-        """ Authorized User (passing a correct password)
-        """
+        """Authorized User (passing a correct password)"""
         authorized = self._check_rights(message)
         if authorized:
             log.info("\t> Cache wanted to be reset. User is authorized.")
@@ -111,7 +118,9 @@ class Commands:
         authorized = self._check_rights(message)
         if authorized:
             log.info("\t> Broker change requested. User is authorized.")
-        log.debug(f" broker requested to changed to '{new_broker_name}' but it is not implemented yet.\n")
+        log.debug(
+            f" broker requested to changed to '{new_broker_name}' but it is not implemented yet.\n"
+        )
 
     def heartbeat_handle(self, message, CoincDeciderInstance):
         """handle heartbeat"""
@@ -135,56 +144,71 @@ class Commands:
         log.info(f"\t> Retracting message in the snews_coinc.")
 
     def send_feedback(self, message, CoincDeciderInstance):
-        """ Check the user and pre-compiled email list
-            send an email with a feedback from past 24H
-            multiple mails are allowed by separating semicolon ";"
-            Expected message format
-            message = {'_id': '0_Get-Feedback',
-                       'email': email_address,
-                       'detector_name': detector_name,
-                       'meta': {}}
+        """Check the user and pre-compiled email list
+        send an email with a feedback from past 24H
+        multiple mails are allowed by separating semicolon ";"
+        Expected message format
+        message = {'_id': '0_Get-Feedback',
+                   'email': email_address,
+                   'detector_name': detector_name,
+                   'meta': {}}
         """
-        given_mail = message.get('email', None)
+        given_mail = message.get("email", None)
         if given_mail is None:
             log.error(f"\t> No email is given, ignoring.")
             return None
 
         # first check if requested email address is in our list
-        detector = message['detector_name']
+        detector = message["detector_name"]
         none_valid = True
         # avoid empty lines, and allow multiple emails
         given_mail = [mail.strip() for mail in given_mail.split(";") if len(mail.strip())]
-        log.debug(f"> [DEBUG] These mails are passed {'; '.join(given_mail)} for detector: {detector}")
+        log.debug(
+            f"> [DEBUG] These mails are passed {'; '.join(given_mail)} for detector: {detector}"
+        )
         for email in given_mail:
             if not email in contact_list[detector]["emails"]:
                 log.error(f"\t> The given email: {email} is not registered for {detector}!")
             else:
                 none_valid = False
         if none_valid:
-            log.error(f"\t> None of the the given email: {';'.join(given_mail)} is registered, ignoring all!")
+            log.error(
+                f"\t> None of the the given email: {';'.join(given_mail)} is registered, "
+                + f"ignoring all!"
+            )
             return None
         try:
-            attachment_name, out = check_frequencies_and_send_mail(detector, given_contact=given_mail)
+            attachment_name, out = check_frequencies_and_send_mail(
+                detector, given_contact=given_mail
+            )
             if out:
-                log.info(f"\t> The feedback file: {attachment_name} is sent to the registered mails for {detector}")
+                log.info(
+                    f"\t> The feedback file: {attachment_name} is sent to the registered mails "
+                    + f"for {detector}"
+                )
             else:
-                log.debug(f"\t> The feedback file: {attachment_name} is created but could not be sent.")
+                log.debug(
+                    f"\t> The feedback file: {attachment_name} is created but could not be sent."
+                )
         except Exception as e:
-            log.info(f"\t> Something went wrong for {detector}, couldn't send mail, see the exception;\n{e}")
+            log.info(
+                f"\t> Something went wrong for {detector}, couldn't send mail, see the exception;"
+                + f"\n{e}"
+            )
 
 
 class CommandHandler:
-    """ class to handle the manual command issued by the admins
-            These commands can be
-            - Garbage message handling
-            - Reset the cache
-            - Test connection
-            - Retract messages
-            - Testing-purpose submissions
-            - Get logs
-            - Change Broker
-            - Request Feedback
-        """
+    """class to handle the manual command issued by the admins
+    These commands can be
+    - Garbage message handling
+    - Reset the cache
+    - Test connection
+    - Retract messages
+    - Testing-purpose submissions
+    - Get logs
+    - Change Broker
+    - Request Feedback
+    """
 
     def __init__(self, message):
         self.input_message = message
@@ -209,11 +233,11 @@ class CommandHandler:
         else:
             # if passed, there has to be an _id field
             log.info(f"\t> Message is in SnewsFormat. '_id':{self.input_message['_id']} ")
-            self.is_test = self.input_message['meta'].get('is_test', False)
+            self.is_test = self.input_message["meta"].get("is_test", False)
             log.info(f"\t> Received Message is {'NOT ' if not self.is_test else ''}a test message!")
 
         # check what the _id field specifies
-        self.command_name = self.input_message['_id'].split('_')[1]
+        self.command_name = self.input_message["_id"].split("_")[1]
         return self.check_command(CoincDeciderInstance)  # GO / NO-GO
 
     def check_command(self, CoincDeciderInstance):
@@ -221,9 +245,13 @@ class CommandHandler:
         # return No-Go so that it doesn't try to check for coincidence
         if self.command_name in known_commands:
             log.info(f"\t> [COMMAND] {self.command_name} command is passed!")
-            self.Command_Executer.execute(self.command_name, self.input_message, CoincDeciderInstance)
+            self.Command_Executer.execute(
+                self.command_name, self.input_message, CoincDeciderInstance
+            )
             if self.command_name == "Retraction":
-                log.info(f"\t> {self.command_name} command executed coincidence check is still a GO!")
+                log.info(
+                    f"\t> {self.command_name} command executed coincidence check is still a GO!"
+                )
                 # it is a retraction message, requires to return a GO
                 return True
             else:
@@ -237,5 +265,7 @@ class CommandHandler:
 
         # if it is something else (e.g. SigTier) log it and return No-Go for coincidence check
         else:
-            log.error(f"\t> {self.command_name} is received (NOT KNOWN), coincidence check is NO-GO!\n")
+            log.error(
+                f"\t> {self.command_name} is received (NOT KNOWN), coincidence check is NO-GO!\n"
+            )
             return False

@@ -43,7 +43,12 @@ def get_image(is_test, alert_data, topic):
     updatelink = "https://www.shutterstock.com/image-vector/vector-illustration-modern-label-new-600w-1520423249.jpg"
     # updatelink = "https://raw.githubusercontent.com/SNEWS2/SNEWS_Coincidence_System/main/snews_cs/auxiliary/update_image.png"
     # "https://www.ris.world/wp-content/uploads/2018/09/update.jpg"
-    sendlink = giflink if alert_type == "NEW_MESSAGE" else (updatelink if alert_type == "UPDATE" else retractlink)
+
+    sendlink = retractlink
+    if alert_type == "UPDATE":
+        sendlink = updatelink
+    if alert_type == "NEW_MESSAGE":
+        sendlink = giflink
 
     im = [{
             "type": "section",
@@ -79,8 +84,8 @@ def get_image(is_test, alert_data, topic):
 # TODO: for tables it complains
 # UserWarning: The `text` argument is missing in the request payload for a chat.postMessage call -
 # It's a best practice to always provide a `text` argument when posting a message.
-# The `text` argument is used in places where content cannot be rendered such as: system push notifications,
-# assistive technology such as screen readers, etc.
+# The `text` argument is used in places where content cannot be rendered such as: system push
+# notifications, assistive technology such as screen readers, etc.
 def send_table(alert_data, alert, is_test, topic):
     """ send warning on slack.
         Both alert_data (dictionary with info from each detector)

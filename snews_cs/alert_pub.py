@@ -18,7 +18,8 @@ class AlertPublisher:
     """ Class to publish SNEWS SuperNova Alerts based on coincidence
 
     """
-    def __init__(self, env_path=None, verbose=True, auth=True, use_local=False, firedrill_mode=True):
+    def __init__(self, env_path=None, verbose=True, auth=True, use_local=False,
+                 firedrill_mode=True):
         """
         Alert publisher constructor
         Parameters

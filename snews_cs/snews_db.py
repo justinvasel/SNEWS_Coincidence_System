@@ -20,12 +20,12 @@ class Storage:
 
     def __init__(self, env=None, drop_db=True, use_local_db=False):
         cs_utils.set_env(env)
-        self.mgs_expiration = int(os.getenv('MSG_EXPIRATION'))
-        self.coinc_threshold = int(os.getenv('COINCIDENCE_THRESHOLD'))
-        self.mongo_server = os.getenv('DATABASE_SERVER')
+        self.mgs_expiration = int(os.getenv("MSG_EXPIRATION"))
+        self.coinc_threshold = int(os.getenv("COINCIDENCE_THRESHOLD"))
+        self.mongo_server = os.getenv("DATABASE_SERVER")
 
         if use_local_db:
-            self.client = pymongo.MongoClient('mongodb://localhost:27017/', replicaset='rs0')
+            self.client = pymongo.MongoClient("mongodb://localhost:27017/", replicaset="rs0")
         else:
             self.client = pymongo.MongoClient(self.mongo_server)
 
@@ -59,27 +59,33 @@ class Storage:
             self.time_tier_alerts.drop_indexes()
             self.sig_tier_alerts.drop_indexes()
             # set index
-            self.all_mgs.create_index('received_time')
-            self.coincidence_tier_archive.create_index('received_time', expireAfterSeconds=self.mgs_expiration)
-            self.sig_tier_archive.create_index('received_time', expireAfterSeconds=self.mgs_expiration)
-            self.time_tier_archive.create_index('received_time', expireAfterSeconds=self.mgs_expiration)
-            self.false_warnings.create_index('received_time')
-            self.coincidence_tier_alerts.create_index('received_time')
-            self.sig_tier_alerts.create_index('received_time')
-            self.time_tier_alerts.create_index('received_time')
+            self.all_mgs.create_index("received_time")
+            self.coincidence_tier_archive.create_index(
+                "received_time", expireAfterSeconds=self.mgs_expiration
+            )
+            self.sig_tier_archive.create_index(
+                "received_time", expireAfterSeconds=self.mgs_expiration
+            )
+            self.time_tier_archive.create_index(
+                "received_time", expireAfterSeconds=self.mgs_expiration
+            )
+            self.false_warnings.create_index("received_time")
+            self.coincidence_tier_alerts.create_index("received_time")
+            self.sig_tier_alerts.create_index("received_time")
+            self.time_tier_alerts.create_index("received_time")
 
         self.coll_list = {
-            'CoincidenceTier': self.coincidence_tier_archive,
-            'SigTier': self.sig_tier_archive,
-            'TimeTier': self.time_tier_archive,
-            'Retraction': self.false_warnings,
-            'CoincidenceTierAlert': self.coincidence_tier_alerts,
-            'SigTierAlert': self.sig_tier_alerts,
-            'TimeTierAlert': self.time_tier_alerts,
+            "CoincidenceTier": self.coincidence_tier_archive,
+            "SigTier": self.sig_tier_archive,
+            "TimeTier": self.time_tier_archive,
+            "Retraction": self.false_warnings,
+            "CoincidenceTierAlert": self.coincidence_tier_alerts,
+            "SigTierAlert": self.sig_tier_alerts,
+            "TimeTierAlert": self.time_tier_alerts,
         }
 
     def insert_mgs(self, mgs):
-        """ This method inserts a SNEWS message to its corresponding collection
+        """This method inserts a SNEWS message to its corresponding collection
 
         Parameters
         ----------
@@ -87,13 +93,13 @@ class Storage:
             dictionary of the SNEWS message
 
         """
-        mgs_type = mgs['_id'].split('_')[1]
+        mgs_type = mgs["_id"].split("_")[1]
         specific_coll = self.coll_list[mgs_type]
         specific_coll.insert_one(mgs)
         self.all_mgs.insert_one(mgs)
 
     def get_all_messages(self, sort_order=pymongo.ASCENDING):
-        """ Returns a list of all messages in the 'all-messages' collection
+        """Returns a list of all messages in the 'all-messages' collection
 
         Parameters
         ----------
@@ -106,10 +112,10 @@ class Storage:
             A list containing all items inside 'All-Messages'
 
         """
-        return self.all_mgs.find().sort('received_time', sort_order)
+        return self.all_mgs.find().sort("received_time", sort_order)
 
     def get_coincidence_tier_archive(self, sort_order=pymongo.ASCENDING):
-        """ Returns a list of all messages in the 'cache' collection
+        """Returns a list of all messages in the 'cache' collection
 
         Parameters
         ----------
@@ -122,10 +128,10 @@ class Storage:
             A list containing all items inside 'Coincidence Tier Cache'
 
         """
-        return self.coincidence_tier_archive.find().sort('received_time', sort_order)
+        return self.coincidence_tier_archive.find().sort("received_time", sort_order)
 
     def get_false_warnings(self, sort_order=pymongo.ASCENDING):
-        """ Returns a list of all messages in the 'cache' collection
+        """Returns a list of all messages in the 'cache' collection
 
         Parameters
         ----------
@@ -138,28 +144,24 @@ class Storage:
             A list containing all items inside 'Coincidence Tier Cahce'
 
         """
-        return self.false_warnings.find().sort('received_time', sort_order)
+        return self.false_warnings.find().sort("received_time", sort_order)
 
     def empty_retractions(self):
-        """ Returns True of if false warnings is empty
-
-        """
+        """Returns True of if false warnings is empty"""
         if self.false_warnings.count() == 0:
             return True
         else:
             return False
 
     def empty_coinc_archive(self):
-        """ Returns True of if coincidence cache is empty
-
-        """
+        """Returns True of if coincidence cache is empty"""
         if self.coincidence_tier_archive.count() <= 1:
             return True
         else:
             return False
 
     def purge_archive(self, coll):
-        """ Erases all items in a collection
+        """Erases all items in a collection
 
         Parameters
         ----------
@@ -184,5 +186,4 @@ class Storage:
 
         """
         sort_order = pymongo.ASCENDING
-        return self.coll_list[f'{which_tier}Alert'].find().sort('received_time', sort_order)
-
+        return self.coll_list[f"{which_tier}Alert"].find().sort("received_time", sort_order)
