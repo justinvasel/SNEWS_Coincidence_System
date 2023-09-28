@@ -6,7 +6,7 @@ import os
 
 
 def set_env(env_path=None):
-    """ Set environment parameters
+    """Set environment parameters
 
     Parameters
     ----------
@@ -15,7 +15,7 @@ def set_env(env_path=None):
         Use default settings if not given
 
     """
-    default_env_path = os.path.dirname(__file__) + '/auxiliary/test-config.env'
+    default_env_path = os.path.dirname(__file__) + "/auxiliary/test-config.env"
     env = env_path or default_env_path
     load_dotenv(env)
 

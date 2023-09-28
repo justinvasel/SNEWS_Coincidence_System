@@ -15,11 +15,11 @@ from .snews_db import Storage
 
 
 class AlertPublisher:
-    """ Class to publish SNEWS SuperNova Alerts based on coincidence
+    """Class to publish SNEWS SuperNova Alerts based on coincidence"""
 
-    """
-    def __init__(self, env_path=None, verbose=True, auth=True, use_local=False,
-                 firedrill_mode=True):
+    def __init__(
+        self, env_path=None, verbose=True, auth=True, use_local=False, firedrill_mode=True
+    ):
         """
         Alert publisher constructor
         Parameters
@@ -44,7 +44,7 @@ class AlertPublisher:
         self.storage = Storage(drop_db=False, use_local_db=use_local)
 
     def __enter__(self):
-        self.stream = Stream(until_eos=True, auth=self.auth).open(self.alert_topic, 'w')
+        self.stream = Stream(until_eos=True, auth=self.auth).open(self.alert_topic, "w")
         return self
 
     def __exit__(self, *args):
@@ -65,11 +65,12 @@ class AlertPublisher:
     def display_message(self, message):
         if self.verbose:
             # print(message['_id'])
-            tier = 'TEST ALERT'
-            click.secho(f'{"-" * 64}', fg='bright_blue')
-            click.secho(f'Sending {tier}', fg='bright_red')
+            tier = "TEST ALERT"
+            click.secho(f'{"-" * 64}', fg="bright_blue")
+            click.secho(f"Sending {tier}", fg="bright_red")
             for k, v in message.items():
-                print(f'{k:<35s}:{v}')
+                print(f"{k:<35s}:{v}")
+
 
 # Display message prints out the following on the server logs
 #
