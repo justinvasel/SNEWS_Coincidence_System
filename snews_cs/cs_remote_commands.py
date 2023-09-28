@@ -2,11 +2,9 @@ import os
 import json
 import click
 from snews_pt.snews_format_checker import SnewsFormat
-import pandas as pd
-from .heartbeat_feedbacks import check_frequencies_and_send_mail, delete_old_figures
+from .heartbeat_feedbacks import check_frequencies_and_send_mail
 from .core.logging import getLogger
 from hop.models import JSONBlob
-from .snews_hb import beats_path
 
 log = getLogger(__name__)
 
