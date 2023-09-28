@@ -287,7 +287,7 @@ class CacheManager:
         update_message = f"\t> UPDATING MESSAGE FROM: {update_detector}"
         log.info(update_message)
         # get indices of where the detector name is present
-        detector_ind = self.cache.query(f"detector_name==@update_detector").index.to_list()
+        detector_ind = self.cache.query("detector_name==@update_detector").index.to_list()
         #  loop through the indices
         for ind in detector_ind:
             # get the sub tag
@@ -450,7 +450,7 @@ class CoincidenceDistributor:
 
         """
         click.secho(
-            f"Here is the current coincident table\n",
+            "Here is the current coincident table\n",
             fg="magenta",
             bold=True,
         )
@@ -625,7 +625,7 @@ class CoincidenceDistributor:
                     self.retriable_error_count += 1
                     if self.retriable_error_count >= self.max_retriable_errors:
                         log.error(
-                            f"Max retryable errors exceeded. "
+                            "Max retryable errors exceeded. "
                             + f"Here is the most recent exception:\n{e}\n"
                         )
                         fatal_error = True
@@ -635,7 +635,7 @@ class CoincidenceDistributor:
                         time.sleep((1.5**self.retriable_error_count) * (1 + random.random()) / 2)
                 else:
                     log.error(
-                        f"(1) Something crashed the server, not a retriable error, "
+                        "(1) Something crashed the server, not a retriable error, "
                         + f"here is the Exception raised\n{e}\n"
                     )
                     fatal_error = True

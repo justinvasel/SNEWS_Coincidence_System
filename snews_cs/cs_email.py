@@ -44,10 +44,10 @@ def _mail_sender(mails):
         if stdout == 0:
             success = True
     if success:
-        log.info(f"\t> Mail was successfully sent!\n")
+        log.info("\t> Mail was successfully sent!\n")
         return True
     else:
-        log.error(f"\t> Mail could not be sent.\n")
+        log.error("\t> Mail could not be sent.\n")
         return False
 
 

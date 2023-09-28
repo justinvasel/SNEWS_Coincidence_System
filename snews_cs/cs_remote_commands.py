@@ -55,7 +55,7 @@ class Commands:
             if message["pass"] == self.passw:
                 return True
             else:
-                log.error(f"\t> Authorization check failed")
+                log.error("\t> Authorization check failed")
                 return False
         except Exception as e:
             log.error(f"\t> Authorization check failed\n{e}")
@@ -93,7 +93,7 @@ class Commands:
             # insert back with a "received" status
             s.write(JSONBlob(msg))
             log.info(
-                f"\t> Connection Tested. 'Received' message is reinserted to connection stream."
+                "\t> Connection Tested. 'Received' message is reinserted to connection stream."
             )
 
     def hard_reset(self, message, CoincDeciderInstance):
@@ -124,9 +124,9 @@ class Commands:
         """handle heartbeat"""
         success = CoincDeciderInstance.heartbeat.electrocardiogram(message)
         if success:
-            log.debug(f"\t> Heartbeat registered.")
+            log.debug("\t> Heartbeat registered.")
         else:
-            log.debug(f"\t> Heartbeat failed to register!")
+            log.debug("\t> Heartbeat failed to register!")
 
     def display_heartbeats(self, message, CoincDeciderInstance):
         authorized = self._check_rights(message)
@@ -134,12 +134,12 @@ class Commands:
             log.info("\t> User wants to display the Heartbeat table. User is authorized.")
             click.secho("\nCurrent heartbeats table as requested by the user\n")
             print(CoincDeciderInstance.heartbeat.cache_df.to_markdown(), "\n\n")
-            log.debug(f"\t> Logs printed as stdout, user should check the remote logs.")
+            log.debug("\t> Logs printed as stdout, user should check the remote logs.")
         else:
             log.error("\t> User wants to display the Heartbeat table. User is NOT authorized.")
 
     def retract_message(self, message, CoincDeciderInstance):
-        log.info(f"\t> Retracting message in the snews_coinc.")
+        log.info("\t> Retracting message in the snews_coinc.")
 
     def send_feedback(self, message, CoincDeciderInstance):
         """Check the user and pre-compiled email list
@@ -153,7 +153,7 @@ class Commands:
         """
         given_mail = message.get("email", None)
         if given_mail is None:
-            log.error(f"\t> No email is given, ignoring.")
+            log.error("\t> No email is given, ignoring.")
             return None
 
         # first check if requested email address is in our list
@@ -172,7 +172,7 @@ class Commands:
         if none_valid:
             log.error(
                 f"\t> None of the the given email: {';'.join(given_mail)} is registered, "
-                + f"ignoring all!"
+                + "ignoring all!"
             )
             return None
         try:
@@ -223,7 +223,7 @@ class CommandHandler:
         return formatter()
 
     def handle(self, CoincDeciderInstance):
-        log.debug(f"\t> Handling message..\n")
+        log.debug("\t> Handling message..\n")
         # check if the message in stream has SnewsFormat
         if not self.check_message_format():
             log.error("\t> Message not in SnewsFormat! NO-GO")
