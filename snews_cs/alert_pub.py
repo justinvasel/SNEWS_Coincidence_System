@@ -1,13 +1,14 @@
 """
 An interface for SNEWS alert publisher
 
-Created: 
+Created:
 August 2021
-Authors: 
+Authors:
 Melih Kara
 Sebastian Torres-Lara
 """
-import os, click
+import click
+import os
 from hop import Stream
 from . import cs_utils
 from .snews_db import Storage
@@ -19,7 +20,7 @@ class AlertPublisher:
     """
     def __init__(self, env_path=None, verbose=True, auth=True, use_local=False, firedrill_mode=True):
         """
-        Alert publisher constructor 
+        Alert publisher constructor
         Parameters
         ----------
         env_path: str

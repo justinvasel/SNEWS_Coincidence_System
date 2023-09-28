@@ -1,6 +1,7 @@
 from . import cs_utils
 from .snews_db import Storage
-import os, click
+import click
+import os
 from datetime import datetime
 from .alert_pub import AlertPublisher
 import numpy as np

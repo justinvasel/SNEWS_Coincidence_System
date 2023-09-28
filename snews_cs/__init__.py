@@ -1,7 +1,7 @@
 from .core.logging import initialize_logging
+import pandas as pd
 
 initialize_logging("debug")
-import pandas as pd
 pd.options.mode.chained_assignment = None
 
 try:

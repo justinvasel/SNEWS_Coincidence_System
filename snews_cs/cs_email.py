@@ -1,7 +1,8 @@
 
 # https://unix.stackexchange.com/questions/381131/simplest-way-to-send-mail-with-image-attachment-from-command-line-using-gmail
 
-import os, json
+import json
+import os
 from datetime import datetime
 from .core.logging import getLogger
 from .snews_hb import beats_path

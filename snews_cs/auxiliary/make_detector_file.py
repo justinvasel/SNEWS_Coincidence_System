@@ -5,7 +5,8 @@ Script to create detector file.
 New detectors can be added here.
 """
 
-import json, os
+import json
+import os
 from collections import namedtuple
 
 Detector = namedtuple("Detector", ["name", "id", "location"])

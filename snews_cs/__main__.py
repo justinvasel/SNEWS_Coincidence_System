@@ -8,7 +8,8 @@
 """
 
 # https://click.palletsprojects.com/en/8.0.x/utils/
-import click, os
+import click
+import os
 from . import __version__
 from . import cs_utils
 from . import snews_coinc as snews_coinc

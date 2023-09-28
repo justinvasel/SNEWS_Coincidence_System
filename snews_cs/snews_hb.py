@@ -3,7 +3,8 @@ This a module to handle all heartbeat related work
 
 """
 
-import os, json
+import json
+import os
 import pandas as pd
 from datetime import datetime
 import numpy as np
