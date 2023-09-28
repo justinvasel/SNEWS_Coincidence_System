@@ -55,7 +55,7 @@ def _mail_sender(mails):
 def send_feedback_mail(detector, attachment=None, message_content=None, given_contact=None):
     """Send feedback email to authorized, requested users"""
     # Accept a contact list (e-mail(s)) # mail addresses already checked
-    if type(given_contact) != list:
+    if given_contact is list:
         contacts = list(given_contact)
     else:
         contacts = given_contact

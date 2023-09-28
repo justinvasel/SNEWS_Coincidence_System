@@ -32,7 +32,7 @@ def get_data_strings(df_input):
     type_dtime = type(datetime.utcnow())
     for col in df.columns:
         for i in range(len(df)):
-            if type(df[col].iloc[i]) == type_dtime:
+            if df[col].iloc[i] is type_dtime:
                 # print(col, i, df[col].iloc[i])
                 df.at[i, col] = df.at[i, col].isotime()
     return df
