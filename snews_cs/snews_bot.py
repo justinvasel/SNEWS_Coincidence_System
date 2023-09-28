@@ -44,8 +44,7 @@ def get_image(is_test, alert_data, topic):
     #"https://www.ris.world/wp-content/uploads/2018/09/update.jpg"
     sendlink = giflink if alert_type=="NEW_MESSAGE" else (updatelink if alert_type=="UPDATE" else retractlink)
 
-    im = \
-        [{
+    im = [{
             "type": "section",
             "text": {
                 "type": "mrkdwn",
@@ -70,8 +69,7 @@ def get_image(is_test, alert_data, topic):
                     "url": "http://snews2.org"
                 }
                         ]
-        }
-    ]
+        }]
     return im
 
 

@@ -19,9 +19,9 @@ from socket import gethostname
 @click.group(invoke_without_command=True)
 @click.version_option(__version__)
 @click.option('--env', type=str,
-    default='/auxiliary/test-config.env',
-    show_default='auxiliary/test-config.env',
-    help='environment file containing the configurations')
+              default='/auxiliary/test-config.env',
+              show_default='auxiliary/test-config.env',
+              help='environment file containing the configurations')
 @click.pass_context
 def main(ctx, env):
     """ User interface for snews_pt tools
@@ -39,7 +39,7 @@ def main(ctx, env):
 @click.option('--email/--no-email', default=True, show_default='True', help='Whether to send emails along with the alert')
 @click.option('--slackbot/--no-slackbot', default=True, show_default='True', help='Whether to send the alert on slack')
 def run_coincidence(local, firedrill, dropdb, email, slackbot):
-    """ Initiate Coincidence Decider 
+    """ Initiate Coincidence Decider
     """
     HOST = gethostname()
     coinc = snews_coinc.CoincidenceDistributor(use_local_db=local,
@@ -48,9 +48,9 @@ def run_coincidence(local, firedrill, dropdb, email, slackbot):
                                                server_tag=HOST,
                                                send_email=email,
                                                send_slack=slackbot)
-    try: 
+    try:
         coinc.run_coincidence()
-    except KeyboardInterrupt: 
+    except KeyboardInterrupt:
         pass
     except Exception as e:
         print(e)

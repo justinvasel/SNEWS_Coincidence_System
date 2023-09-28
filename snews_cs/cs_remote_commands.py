@@ -134,7 +134,6 @@ class Commands:
 
     def retract_message(self, message, CoincDeciderInstance):
         log.info(f"\t> Retracting message in the snews_coinc.")
-                  # f"This requires a GO so that message can be added and compared in the cache!")
 
     def send_feedback(self, message, CoincDeciderInstance):
         """ Check the user and pre-compiled email list
@@ -188,7 +187,7 @@ class CommandHandler:
         """
 
     def __init__(self, message):
-        
+
 
         self.input_message = message
         self.input_json = json.dumps(message, sort_keys=True, indent=4)

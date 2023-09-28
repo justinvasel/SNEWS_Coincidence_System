@@ -219,11 +219,11 @@ class HeartBeat:
         issue = "no issue"
         for key in ['detector_name', 'detector_status']:
             if key not in message.keys():
-               issue = f" {key} is not in message keys"
+                issue = f" {key} is not in message keys"
         if issue == "no issue":
             if not isinstance(message['Received Times'], datetime):
                 issue = f" {message['Received Times']} is not a datetime object"
-            if not message['detector_status'].lower() in ['on','off']:
+            if not message['detector_status'].lower() in ['on','    off']:
                 issue = f" {message['detector_status']} is neither ON nor OFF"
             if not message['detector_name'] in snews_detectors:
                 issue = f" {message['detector_name']} is not a valid detector"
