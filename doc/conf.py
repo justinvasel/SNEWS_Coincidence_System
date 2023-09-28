@@ -14,6 +14,8 @@
 
 import os
 import sys
+import sphinx_pdj_theme
+
 sys.path.insert(0, os.path.abspath('.'))
 
 #  on_rtd is whether we are on readthedocs.org, this line of code grabbed
@@ -111,14 +113,14 @@ def setup(app):
 html_static_path = ['_static']
 
 # if not on_rtd:  # only import and set the theme if we're building docs locally
-    # import sphinx_rtd_theme
-    # html_theme = 'sphinx_rtd_theme'
-    # html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-import sphinx_pdj_theme
+# import sphinx_rtd_theme
+# html_theme = 'sphinx_rtd_theme'
+# html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
 html_theme = 'sphinx_pdj_theme'
 html_theme_path = [sphinx_pdj_theme.get_html_theme_path()]
 
-#html_static_path = ['_static']
+# html_static_path = ['_static']
 html_logo = "./snews_logo.png"
 html_theme_options = {
     'logo_only': True,
@@ -133,7 +135,7 @@ html_theme_options = {
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-#html_sidebars = { '**': ['about.html', 'navigation.html', 'relations.html', 'searchbox.html'] }
+# html_sidebars = { '**': ['about.html', 'navigation.html', 'relations.html', 'searchbox.html'] }
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
